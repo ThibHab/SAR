@@ -1,20 +1,44 @@
 package task1;
 
-import java.util.concurrent.Semaphore;
-
 public class RendezVous {
-    Semaphore Servsem = new Semaphore(0);
-    Semaphore Clisem = new Semaphore(0);
-    Broker Cli;
 
-    public void accept() throws InterruptedException{
-        Servsem.release();
-        Clisem.acquire();
+    ChannelImplem ac;
+    ChannelImplem cc;
+    Broker ab;
+    Broker cb;
+
+    private void waits(){
+        while (ac == null || cc == null) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                // TODO: handle exception
+            }
+        }
     }
 
-    public void connect() throws InterruptedException{
-        Clisem.release();
-        Servsem.acquire();
+    public synchronized Channel accept(Broker b, int port) {
+        this.ab = b;
+        ac = new ChannelImplem(ab, port);
+        if (cc!= null) {
+            ac.connect(cc,ab.name);
+            notify();
+        }else{
+            waits();
+        }
+        return ac;
+    }
+
+    public synchronized Channel connect(Broker b, int port) {
+        this.cb = b;
+        cc = new ChannelImplem(cb, port);
+        if (ac != null){
+            ac.connect(cc,cb.name);
+            notify();
+        }else{
+            waits();
+        }
+        return cc;
     }
 
 }
