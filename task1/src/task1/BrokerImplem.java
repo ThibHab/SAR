@@ -7,14 +7,14 @@ public class BrokerImplem extends Broker {
     BrokerManager bm;
     HashMap<Integer, RendezVous> rdv = new HashMap<Integer, RendezVous>();
 
-    BrokerImplem(String name) {
+    public BrokerImplem(String name) {
         super(name);
         bm = BrokerManager.getSelf();
         bm.addBroker(this);
     }
 
     @Override
-    Channel accept(int port) {
+    public Channel accept(int port) {
         // ajout du syncronized et verif sur port
         RendezVous tmprdv = null;
         synchronized (rdv) {
@@ -32,7 +32,7 @@ public class BrokerImplem extends Broker {
     }
 
     @Override
-    Channel connect(String name, int port) {
+    public Channel connect(String name, int port) {
         BrokerImplem b = bm.getBroker(name);
         if (b == null) {
             return null;

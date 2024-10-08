@@ -23,7 +23,7 @@ public class ChannelImplem extends Channel{
     }
 
     @Override
-    int read(byte[] bytes, int offset, int length) throws DisconnectedException {
+    public int read(byte[] bytes, int offset, int length) throws DisconnectedException {
         if (disconnected) {
             throw new DisconnectedException();
         }
@@ -66,7 +66,7 @@ public class ChannelImplem extends Channel{
     }
 
     @Override
-    int write(byte[] bytes, int offset, int length) throws DisconnectedException {
+    public int write(byte[] bytes, int offset, int length) throws DisconnectedException {
         if(disconnected){
             throw new DisconnectedException();
         }
@@ -102,7 +102,7 @@ public class ChannelImplem extends Channel{
     }
 
     @Override
-    void disconnect() {
+    public void disconnect() {
         synchronized(this){
             if (disconnected) {return;}
             disconnected=true;
@@ -117,7 +117,7 @@ public class ChannelImplem extends Channel{
     }
 
     @Override
-    boolean disconnected() {
+    public boolean disconnected() {
         return disconnected;
     }
 
