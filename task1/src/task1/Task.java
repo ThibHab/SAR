@@ -1,8 +1,19 @@
 package task1;
 
-abstract class Task extends Thread {
+class Task extends Thread {
+
+	Broker broker;
+
 	Task(Broker b, Runnable r) {
+		super(r);
+		this.broker = b;
 	}
 
-	abstract Broker getBroker();
+	Broker getBroker() {
+		Thread t = Thread.currentThread();
+		if (t instanceof Task) {
+			return ((Task) t).broker;
+		}
+		return null;
+	}
 }
