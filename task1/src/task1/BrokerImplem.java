@@ -24,7 +24,7 @@ public class BrokerImplem extends Broker {
             }
             tmprdv = new RendezVous();
             rdv.put(port, tmprdv);
-            notifyAll();
+            rdv.notifyAll();
         }
         Channel ch;
         ch = tmprdv.accept(this, port);
