@@ -1,8 +1,8 @@
 package task1;
 
-abstract class Channel {
-	abstract int read(byte[] bytes, int offset, int length) throws DisconnectedException;
-	abstract int write(byte[] bytes, int offset, int length) throws DisconnectedException;
-	abstract void disconnect();
-	abstract boolean disconnected();
+public abstract class Channel {
+	public abstract int read(byte[] bytes, int offset, int length) throws DisconnectedException;
+	public abstract int write(byte[] bytes, int offset, int length) throws DisconnectedException;
+	public abstract void disconnect();
+	public abstract boolean disconnected();
 	}
